@@ -31,3 +31,16 @@ ProductsController::
         } else {
             return back()->with('error', 'Product was not saved Successfully!');
         }
+
+For showing the Image::
+==========================================
+<div class="col-xs-8">
+                <div class="row">
+                    @foreach($returnProducts as $product)
+                        <div class="col-xs-4" style="padding: 10px;">
+                            <img src="{{asset($product['image'])}}" height="200" width="150">
+                            <h4> {{$product['name']}}</h4>
+                            <p>{{$product['price']}}</p>
+                        </div>
+                    @endforeach
+                </div>
