@@ -1,0 +1,33 @@
+add_products.blade.php
+=====================================
+ <form id="LoginForm" method="POST" action="/products" enctype="multipart/form-data">
+                        @csrf
+                        <input type="text" name="name" placeholder="Product Name">
+                        <input type="text" name="price" placeholder="Price">
+                        <input type="text" name="amount" placeholder="Amount">
+                        <input type="file" name="images[]" multiple>
+                        <button type="submit" class="btn">Add Product</button>
+ </form>
+
+ProductsController::
+=====================================
+// Uploading an Images
+        if ($request->hasFile('images')) {
+            $files = $request->file('images');
+
+            $imageLocation = array();
+            $i = 0;
+            foreach ($files as $file) {
+                $extension = $file->getClientOriginalExtension();
+                $fileName = 'product_' . time() . ++$i . '.' . $extension;
+                $location = '/images/uploads/';
+                $file->move(public_path() . $location, $fileName);
+                $imageLocation[] = $location . $fileName;
+            }
+
+            $product->image = implode('|', $imageLocation);
+            $product->save();
+            return back()->with('success', 'Product Successfully Saved!');
+        } else {
+            return back()->with('error', 'Product was not saved Successfully!');
+        }
