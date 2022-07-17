@@ -29,7 +29,28 @@ ProductsController::
             return back()->with('error', 'Product was not saved Successfully!');
         }
 
-For showing the Image::
+
+//Method for viewing the data into the other file->
+   public function addProduct(){
+        $products= Product::all();
+        $returnProducts= array();
+
+        foreach ($products as $product){
+            $images= explode('|', $product->image);
+
+            $returnProducts[] = [
+               'name'=> $product->name,
+               'price'=> $product->price,
+               'amount'=> $product->amount,
+               'image'=> $images[0]
+            ];
+
+        }
+
+        return view('add_products', compact('returnProducts'));
+    }
+
+For showing the Image on [add_products.blade.php]::
 ==========================================
 <div class="col-xs-8">
                 <div class="row">
