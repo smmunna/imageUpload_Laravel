@@ -1,0 +1,11 @@
+1. Inside the body tage you have to write:
+    <body onmousedown="return false" onselectstart="return false">
+    
+ 2.  Before the ending body tag 
+      <script type=text/javascript>
+      document.addEventListener("contextmenu",function(e){
+        e.preventDefault();
+          });
+      </script>
+
+  
